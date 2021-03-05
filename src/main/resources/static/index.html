@@ -36,12 +36,17 @@
                 <input type="text" class="form-control" id="name" placeholder="Name">
             </div>
             <div class="col">
-                <button type="button" class="btn btn-dark" id="boton" onclick="app.getBlueprintsByAuthor()">Get Blueprints</button>
+                <button type="button" class="btn btn-dark" id="boton" onclick="app.getNameAuthorBlueprints()">Get Blueprints</button>
+            </div>
+        </div>
+        <div class="row" style="padding-bottom: 3%;">
+            <div class="col col-6">
+                <h2 id="authorTitle"></h2>
             </div>
         </div>
         <div class="row" style="padding-bottom: 5%;">
             <div class="col col-6">
-                <table class="table">
+                <table class="table" id="tableBlueprints">
                     <thead>
                         <tr>
                             <th scope="col">Blueprint Name</th>
@@ -50,21 +55,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                          <th scope="row">example</th>
-                          <td>example</td>
-                          <td>example</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">example</th>
-                            <td>example</td>
-                            <td>example</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">example</th>
-                            <td>example</td>
-                            <td>example</td>
-                        </tr>
+
                       </tbody>
                 </table>
             </div>
@@ -74,6 +65,9 @@
         <div class="row">
             <div class="col col-6">
                 <h2>Total user points: </h2>
+            </div>
+            <div class="col col-6">
+                <h2 class="userPoints" id="userPoints">  </h2>
             </div>
         </div>
     </div>
