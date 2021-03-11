@@ -1,29 +1,12 @@
 var app = (function(){
     var name = "";
     var blueprints = []
-    var mockdata = apimock.getMockdata()
+    var fileName = "apliclient"
 
     getAuthor = function(){
         name = $("#name").val()
         $("#authorTitle").text(name +"'s Blueprints")
         //console.log(name)
-    }
-
-    getBlueprints = function(){
-        getAuthor();
-        //console.log(name)
-        //apimock.getBlueprintsByAuthor(name,(err, res) => {
-                //console.log(mockdata[name][0]);
-                for(let i = 0; i < mockdata[name].length; i++) {
-                  var blueprint = {
-                    name: mockdata[name][i].author,
-                    size: mockdata[name][i].points.length
-                }
-                console.log(blueprint);
-                blueprints.push(blueprint)
-                
-            }
-            console.log(blueprints)
     }
     
 
@@ -34,10 +17,7 @@ var app = (function(){
     getNameAuthorBlueprints = function() {
             getAuthor();
             if (name !== "") {
-                apimock.getBlueprintsByAuthor(name, (req, resp) => {
-                    //console.log(resp)
-                    getData(resp)
-                });
+                fileName.getBlueprintsByAuthor(name, getData);
             } else {
                 alert("Debe ingresar algún nombre, vuelva a intentarlo")
             }
@@ -51,29 +31,53 @@ var app = (function(){
             var data = resp.map((info) => {
                 return {
                     name: info.name,
-                    points: info.points.length
+                    lengthPoints: info.points.length ,
+                    points: info.points
                 }
             })
             data.map((info) => {
                 $("#tableBlueprints > tbody:last").append($("<tr><td>" + info.name +
-                                                            "</td><td>" + info.points.toString() +
-                                                            "</td><td>" + "button Open" +
-                                                            "</td>"))
+                                                            "</td><td>" + info.lengthPoints.toString() +
+                                                            "</td><td>" + '<button type="button" class="btn btn-success" id="'+info.name+'"onclick="app.drawCanva(this)">Open</button>' +
+                                                            "</td></tr>"))
             })
 
-            var total = data.reduce((value, {points}) =>
-                value + points , 0
+            var total = data.reduce((value, {lengthPoints}) =>
+                value + lengthPoints , 0
             )
+            
             $("#userPoints").text(total)
+        } else {
+            alert("No existe el autor, escriba un nombre correcto.")
         }
+    }
+
+    drawCanva = function(puntos){
+        getAuthor()
+        fileName.getBlueprintsByNameAndAuthor(puntos.id, name, bluep=>{ 
+            var c = document.getElementById("canvas");
+            var ctx = c.getContext("2d");
+            ctx.clearRect(0, 0, 500, 400);
+            ctx.beginPath()
+            ctx.moveTo(bluep.points[0].x , bluep.points[0].y)
+            for (var i = 1 ; i < bluep.points.length ; i ++){
+                ctx.lineTo(bluep.points[i].x , bluep.points[i].y)
+            }
+            ctx.stroke();
+        })
+    }
+
+    printWorking = function(){
+        console.log("Sirver Perra")
     }
 
 
     return{
         getAuthor : getAuthor,
-        getBlueprints : getBlueprints,
         changeName: changeName,
-        getNameAuthorBlueprints: getNameAuthorBlueprints
+        getNameAuthorBlueprints: getNameAuthorBlueprints ,
+        printWorking : printWorking,
+        drawCanva : drawCanva
     }
 
 
