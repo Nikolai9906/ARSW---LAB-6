@@ -1,7 +1,6 @@
 var app = (function(){
     var name = "";
     var blueprints = [];
-    var archivo = apiclient;
 
     getAuthor = function(){
         name = $("#name").val()
@@ -17,7 +16,7 @@ var app = (function(){
     getNameAuthorBlueprints = function() {
             getAuthor();
             if (name !== "") {
-                archivo.getBlueprintsByAuthor(name, getData);
+                apiclient.getBlueprintsByAuthor(name, getData);
             } else {
                 alert("Debe ingresar algún nombre, vuelva a intentarlo")
             }
@@ -54,7 +53,7 @@ var app = (function(){
 
     drawCanva = function(puntos){
         getAuthor()
-        archivo.getBlueprintsByNameAndAuthor(puntos, name, bluep=>{ 
+        apiclient.getBlueprintsByNameAndAuthor(puntos, name, bluep=>{
             var c = document.getElementById("canvas");
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, 500, 400);
