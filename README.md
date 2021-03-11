@@ -112,7 +112,7 @@
 ![](img/Error.png)
 
 ### 2) Home Page
-![](img/Home.png)
+![](img/home.png)
 
 ### 3) Prueba de dibujo
 ![](img/Dibujo.png)
