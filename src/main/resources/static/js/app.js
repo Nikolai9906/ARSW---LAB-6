@@ -1,7 +1,7 @@
 var app = (function(){
     var name = "";
-    var blueprints = []
-    var fileName = "apliclient"
+    var blueprints = [];
+    var archivo = apiclient;
 
     getAuthor = function(){
         name = $("#name").val()
@@ -17,7 +17,7 @@ var app = (function(){
     getNameAuthorBlueprints = function() {
             getAuthor();
             if (name !== "") {
-                fileName.getBlueprintsByAuthor(name, getData);
+                archivo.getBlueprintsByAuthor(name, getData);
             } else {
                 alert("Debe ingresar algún nombre, vuelva a intentarlo")
             }
@@ -38,7 +38,7 @@ var app = (function(){
             data.map((info) => {
                 $("#tableBlueprints > tbody:last").append($("<tr><td>" + info.name +
                                                             "</td><td>" + info.lengthPoints.toString() +
-                                                            "</td><td>" + '<button type="button" class="btn btn-success" id="'+info.name+'"onclick="app.drawCanva(this)">Open</button>' +
+                                                            "</td><td>" + `<button type="button" class="btn btn-success" id="openBoton" onclick="app.drawCanva('${info.name}')">Open</button>` +
                                                             "</td></tr>"))
             })
 
@@ -54,7 +54,7 @@ var app = (function(){
 
     drawCanva = function(puntos){
         getAuthor()
-        fileName.getBlueprintsByNameAndAuthor(puntos.id, name, bluep=>{ 
+        archivo.getBlueprintsByNameAndAuthor(puntos, name, bluep=>{ 
             var c = document.getElementById("canvas");
             var ctx = c.getContext("2d");
             ctx.clearRect(0, 0, 500, 400);
